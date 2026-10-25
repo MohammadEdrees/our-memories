@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ذكرياتنا معًا 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============================================================
+     خصّصها: انزل إلى وسم <script> في الأسفل وعدّل كائن CONFIG
+     (الأسماء، تاريخ البداية، وكل ذكرى في القائمة).
+     لإضافة صورة لذكرى: ضع الصورة بجانب الملف واكتب مسارها
+     في الحقل photo مثل:  photo: "photos/1.jpg"
+     ============================================================ */
+
+      :root {
+        --blush: #fff1f3;
+        --blush-2: #ffe0e7;
+        --rose: #e5698a;
+        --rose-deep: #c94a70;
+        --wine: #6e2a45;
+        --wine-soft: #946478;
+        --gold: #e9b872;
+        --lavender: #d8c9f2;
+        --paper: #fffbfc;
+
+        --font-head: "Aref Ruqaa", "Cairo", serif;
+        --font-body: "Cairo", system-ui, sans-serif;
+
+        --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-body);
+        color: var(--wine);
+        background:
+          radial-gradient(
+            circle at 90% 4%,
+            rgba(233, 184, 114, 0.28),
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 8% 30%,
+            rgba(216, 201, 242, 0.45),
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 85% 65%,
+            rgba(255, 180, 200, 0.35),
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 10% 95%,
+            rgba(216, 201, 242, 0.4),
+            transparent 50%
+          ),
+          var(--blush);
+        background-attachment: fixed;
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      button {
+        font-family: var(--font-body);
+        cursor: pointer;
+        border: none;
+        background: none;
+      }
+      button:focus-visible {
+        outline: 3px solid var(--rose-deep);
+        outline-offset: 3px;
+        border-radius: 12px;
+      }
+
+      /* ---------- ambient hearts ---------- */
+      .hearts-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .floaty {
+        position: absolute;
+        bottom: -40px;
+        opacity: 0.5;
+        animation: floatUp linear forwards;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) translateX(0) rotate(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.55;
+        }
+        100% {
+          transform: translateY(-110vh) translateX(var(--drift, 20px))
+            rotate(300deg);
+          opacity: 0;
+        }
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ============================================================
+     HERO
+     ============================================================ */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 48px 20px 80px;
+      }
+      .hero-eyebrow {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--rose-deep);
+        background: rgba(255, 255, 255, 0.7);
+        padding: 6px 16px;
+        border-radius: 999px;
+        margin-bottom: 20px;
+      }
+      .hero-title {
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: clamp(2.8rem, 12vw, 5.2rem);
+        line-height: 1.3;
+        color: var(--wine);
+      }
+      .hero-title em {
+        font-style: normal;
+        color: var(--rose);
+      }
+      .hero-names {
+        margin-top: 10px;
+        font-family: var(--font-head);
+        font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+        color: var(--rose-deep);
+      }
+      .hero-sub {
+        margin-top: 14px;
+        max-width: 440px;
+        line-height: 1.9;
+        color: var(--wine-soft);
+        font-size: 1.02rem;
+      }
+
+      .counter {
+        margin-top: 36px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        width: min(420px, 100%);
+      }
+      .counter-box {
+        background: var(--paper);
+        border-radius: 18px;
+        padding: 14px 6px 10px;
+        box-shadow: 0 14px 26px -16px rgba(110, 42, 69, 0.45);
+      }
+      .counter-box b {
+        display: block;
+        font-weight: 800;
+        font-size: clamp(1.25rem, 5.5vw, 1.8rem);
+        color: var(--rose-deep);
+        line-height: 1.2;
+        font-variant-numeric: tabular-nums;
+      }
+      .counter-box span {
+        font-size: 0.78rem;
+        color: var(--wine-soft);
+        font-weight: 600;
+      }
+      .counter-caption {
+        margin-top: 12px;
+        font-size: 0.92rem;
+        color: var(--wine-soft);
+        font-weight: 600;
+      }
+
+      .scroll-hint {
+        margin-top: 44px;
+        font-weight: 600;
+        color: var(--wine-soft);
+        animation: nudge 1.8s ease-in-out infinite;
+      }
+      @keyframes nudge {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.6;
+        }
+        50% {
+          transform: translateY(8px);
+          opacity: 1;
+        }
+      }
+
+      /* ============================================================
+     TIMELINE
+     ============================================================ */
+      .timeline-section {
+        padding: 20px 16px 40px;
+      }
+      .timeline-title {
+        text-align: center;
+        font-family: var(--font-head);
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        margin-bottom: 36px;
+      }
+
+      .timeline {
+        position: relative;
+        max-width: 880px;
+        margin: 0 auto;
+      }
+
+      /* the track + fill + traveling heart */
+      .track {
+        position: absolute;
+        top: 28px;
+        bottom: 28px;
+        right: 28px;
+        width: 4px;
+        transform: translateX(50%);
+        background: rgba(229, 105, 138, 0.2);
+        border-radius: 4px;
+      }
+      .track-fill {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 0;
+        background: linear-gradient(180deg, var(--gold), var(--rose));
+        border-radius: 4px;
+      }
+      .track-heart {
+        position: absolute;
+        right: 50%;
+        top: 0;
+        transform: translate(50%, -50%);
+        font-size: 24px;
+        filter: drop-shadow(0 4px 6px rgba(201, 74, 112, 0.45));
+        animation: beat 1.2s ease-in-out infinite;
+        z-index: 3;
+      }
+      @keyframes beat {
+        0%,
+        100% {
+          transform: translate(50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(50%, -50%) scale(1.25);
+        }
+      }
+
+      .moment {
+        position: relative;
+        display: grid;
+        grid-template-columns: 56px minmax(0, 1fr);
+        gap: 14px;
+        margin-bottom: 34px;
+        opacity: 0;
+        transform: translateY(34px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.7s var(--ease-bounce);
+      }
+      .moment.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .dot {
+        grid-column: 1;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--paper);
+        border: 4px solid var(--rose);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 10px 20px -8px rgba(201, 74, 112, 0.5);
+        position: relative;
+        z-index: 2;
+        transition: transform 0.4s var(--ease-bounce);
+      }
+      .moment.in .dot {
+        animation: pop 0.6s var(--ease-bounce) both;
+      }
+      @keyframes pop {
+        from {
+          transform: scale(0.3);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .card {
+        grid-column: 2;
+        background: var(--paper);
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 22px 40px -24px rgba(110, 42, 69, 0.5);
+        transition: transform 0.3s var(--ease-bounce);
+      }
+      .card:hover {
+        transform: translateY(-4px);
+      }
+
+      .photo {
+        position: relative;
+        aspect-ratio: 16 / 10;
+        background: linear-gradient(135deg, var(--blush-2), var(--lavender));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .photo .ph-emoji {
+        font-size: 56px;
+        opacity: 0.85;
+      }
+
+      .card-body {
+        padding: 18px 20px 16px;
+      }
+      .date-pill {
+        display: inline-block;
+        background: var(--blush-2);
+        color: var(--rose-deep);
+        font-weight: 700;
+        font-size: 0.78rem;
+        padding: 4px 12px;
+        border-radius: 999px;
+        margin-bottom: 10px;
+      }
+      .card-title {
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 1.55rem;
+        line-height: 1.5;
+        color: var(--wine);
+        margin-bottom: 6px;
+      }
+      .card-text {
+        line-height: 2;
+        font-size: 1rem;
+        color: var(--wine-soft);
+      }
+
+      .like {
+        margin-top: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 700;
+        font-size: 0.88rem;
+        color: var(--wine-soft);
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: var(--blush);
+        transition:
+          transform 0.25s var(--ease-bounce),
+          background 0.2s;
+      }
+      .like:hover {
+        transform: scale(1.06);
+      }
+      .like .h {
+        transition: transform 0.3s var(--ease-bounce);
+        display: inline-block;
+      }
+      .like.liked {
+        background: var(--rose);
+        color: #fff;
+      }
+      .like.liked .h {
+        transform: scale(1.25);
+      }
+
+      /* desktop: alternate sides around a centered line */
+      @media (min-width: 780px) {
+        .track {
+          right: 50%;
+        }
+        .moment {
+          grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
+          gap: 26px;
+          align-items: center;
+        }
+        .dot {
+          grid-column: 2;
+        }
+        .moment:nth-child(odd) .card {
+          grid-column: 1;
+        }
+        .moment:nth-child(even) .card {
+          grid-column: 3;
+        }
+        .moment:nth-child(odd) {
+          transform: translateX(40px) translateY(20px);
+        }
+        .moment:nth-child(even) {
+          transform: translateX(-40px) translateY(20px);
+        }
+        .moment.in {
+          transform: none !important;
+        }
+      }
+
+      /* ============================================================
+     ENDING
+     ============================================================ */
+      .ending {
+        text-align: center;
+        padding: 30px 20px 120px;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+      .ending-heart {
+        font-size: 54px;
+        animation: beat2 1.3s ease-in-out infinite;
+        display: inline-block;
+      }
+      @keyframes beat2 {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.18);
+        }
+      }
+      .ending h2 {
+        font-family: var(--font-head);
+        font-size: clamp(1.9rem, 6.5vw, 2.7rem);
+        margin: 10px 0 14px;
+        line-height: 1.5;
+      }
+      .ending p {
+        line-height: 2;
+        color: var(--wine-soft);
+        font-size: 1.05rem;
+      }
+      .ending .sign {
+        margin-top: 16px;
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--rose-deep);
+      }
+      .cta {
+        margin-top: 28px;
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: #fff;
+        background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+        padding: 14px 30px;
+        border-radius: 999px;
+        box-shadow: 0 16px 26px -12px rgba(201, 74, 112, 0.7);
+        transition: transform 0.25s var(--ease-bounce);
+      }
+      .cta:hover {
+        transform: translateY(-3px) scale(1.04);
+      }
+      .cta:active {
+        transform: scale(0.96);
+      }
+
+      /* ---------- burst hearts ---------- */
+      .burst {
+        position: fixed;
+        pointer-events: none;
+        z-index: 60;
+        font-size: 20px;
+        animation: burstOut cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+      }
+      @keyframes burstOut {
+        0% {
+          transform: translate(0, 0) scale(0.6);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--bx), var(--by)) scale(1.1);
+          opacity: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+        .moment {
+          opacity: 1;
+          transform: none;
+        }
+        .hearts-bg {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hearts-bg" id="heartsBg" aria-hidden="true"></div>
+
+    <main>
+      <!-- HERO -->
+      <header class="hero">
+        <p class="hero-eyebrow" id="eyebrow"></p>
+        <h1 class="hero-title" id="heroTitle"></h1>
+        <p class="hero-names" id="heroNames"></p>
+        <p class="hero-sub" id="heroSub"></p>
+
+        <div class="counter" aria-live="off">
+          <div class="counter-box"><b id="cDays">٠</b><span>يوم</span></div>
+          <div class="counter-box"><b id="cHours">٠</b><span>ساعة</span></div>
+          <div class="counter-box"><b id="cMins">٠</b><span>دقيقة</span></div>
+          <div class="counter-box"><b id="cSecs">٠</b><span>ثانية</span></div>
+        </div>
+        <p class="counter-caption">ونحن نكتب قصتنا معًا</p>
+
+        <p class="scroll-hint">اسحب للأسفل لتتذكر معي ↓</p>
+      </header>
+
+      <!-- TIMELINE -->
+      <section class="timeline-section">
+        <h2 class="timeline-title">لحظاتنا الجميلة</h2>
+        <div class="timeline" id="timeline">
+          <div class="track" id="track">
+            <div class="track-fill" id="trackFill"></div>
+            <div class="track-heart" id="trackHeart">💗</div>
+          </div>
+          <!-- moments are rendered here by JS -->
+        </div>
+      </section>
+
+      <!-- ENDING -->
+      <section class="ending">
+        <span class="ending-heart">💕</span>
+        <h2 id="endTitle"></h2>
+        <p id="endText"></p>
+        <p class="sign" id="endSign"></p>
+        <button class="cta" id="ctaBtn" type="button"></button>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        /* ============================================================
+     💌 خصّصها هنا — هذا هو القسم الوحيد الذي تحتاج تعديله.
+     ملاحظة: الصفات والأفعال في العربية تتغير حسب الجنس،
+     عدّل ما يلزم ليناسب طريقتك في الكلام.
+     ============================================================ */
+        const CONFIG = {
+          yourName: "محمد",
+          partnerName: "نونا",
+
+          // تاريخ بداية قصتكما (يعمل عليه العدّاد الحي)
+          startDate: "2026-04-24T24:00:00",
+
+          eyebrow: "قصتنا",
+          heroTitle: "ذكرياتنا <em>معًا</em>",
+          heroSub:
+            "كل لحظة هنا لها مكان خاص في قلبي، وقد جمعتها لك في مكان واحد.",
+
+          moments: [
+            {
+              emoji: "💍",
+              date: "اليوم الذي بدأ فيه كل شيء",
+              title: "خطوبتنا",
+              text: "كل حاجة انت بتعدي من يوم ما اتقدمت لك بسرعة , بسرعة غريبة و كانت الامور متيسرة والحمد لله",
+              photo: "./photos/001.jpg",
+            },
+            {
+              emoji: "💍",
+              date: "اليوم الذي بدأ فيه كل شيء",
+
+              photo: "./photos/002.jpg",
+            },
+            {
+              emoji: "💍",
+              date: "اليوم الذي بدأ فيه كل شيء",
+              photo: "./photos/0.jpg",
+            },
+            {
+              emoji: "🩶",
+              date: "الموعد الأول",
+              title: "اول خروجة لينا",
+              text: "مكنتش عايز اليوم يخلص ساعتها يا قلبي , مكنتش عارف اول مرة اخرج و احس بكمية الاحاسيس دي و في الاخر كنت مبسوط ",
+              photo: "./photos/1.jpg",
+            },
+            {
+              emoji: "🩶",
+              photo: "./photos/7.jpg",
+              date: "بتوووه لما ببص لعينيكي",
+            },
+            {
+              emoji: "🩶",
+              photo: "./photos/8.jpg",
+              date: "🤍 لما بتضحكي ",
+            },
+            {
+              emoji: "🩶",
+              photo: "./photos/10.jpg",
+              date: "🩷 يا مزتي ",
+            },
+            {
+              emoji: "🚌",
+              date: "مغامرتنا الأولى",
+              title: "اول رحلة لينا مع بعض",
+              text: "من اجمل الرحلات اللي طلعتها في حياتي",
+              photo: "./photos/3.jpg",
+            },
+            {
+              emoji: "🚌",
+              photo: "./photos/15.jpg",
+              date: "و انتي جنبي ",
+            },
+            {
+              emoji: "🚌",
+              photo: "./photos/4.jpg",
+              date: " و الجميل سرحان",
+            },
+            {
+              emoji: "🌟",
+              date: "النهاردة",
+              title: "و لسة حكايتنا مكملة مع بعض ",
+              text: "ان شاء الله مع بعض العمر كله في سعادة و هنا يا قلبي ",
+              photo: "./photos/11.jpg",
+            },
+          ],
+
+          endTitle: "والقصة لم تنتهِ بعد…",
+          endText:
+            "هذه مجرد بعض الصفحات، وما زال أمامنا دفتر كامل لنملأه معًا. أحبك اليوم، وغدًا، وفي كل ذكرى قادمة.",
+          endSign: "لك دائمًا، {you}",
+          ctaText: "أحبك 💖",
+        };
+
+        /* ============================================================
+     العرض — لا داعي للتعديل تحت هذا السطر
+     ============================================================ */
+        const $ = (id) => document.getElementById(id);
+        const reduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        const nf = new Intl.NumberFormat("ar-EG");
+
+        $("eyebrow").textContent = CONFIG.eyebrow;
+        $("heroTitle").innerHTML = CONFIG.heroTitle;
+        $("heroNames").textContent =
+          CONFIG.yourName + " ♥ " + CONFIG.partnerName;
+        $("heroSub").textContent = CONFIG.heroSub;
+        $("endTitle").textContent = CONFIG.endTitle;
+        $("endText").textContent = CONFIG.endText;
+        $("endSign").textContent = CONFIG.endSign.replace(
+          "{you}",
+          CONFIG.yourName,
+        );
+        $("ctaBtn").textContent = CONFIG.ctaText;
+
+        /* ---------- build timeline ---------- */
+        const timeline = $("timeline");
+        CONFIG.moments.forEach((m) => {
+          const row = document.createElement("article");
+          row.className = "moment";
+
+          const dot = document.createElement("div");
+          dot.className = "dot";
+          dot.textContent = m.emoji || "💗";
+
+          const card = document.createElement("div");
+          card.className = "card";
+
+          const photo = document.createElement("div");
+          photo.className = "photo";
+          const fallback = () => {
+            photo.innerHTML = "";
+            const e = document.createElement("span");
+            e.className = "ph-emoji";
+            e.textContent = m.emoji || "💗";
+            photo.appendChild(e);
+          };
+          if (m.photo) {
+            const img = document.createElement("img");
+            img.src = m.photo;
+            img.alt = m.title;
+            img.loading = "lazy";
+            img.addEventListener("error", fallback);
+            photo.appendChild(img);
+          } else {
+            fallback();
+          }
+
+          const body = document.createElement("div");
+          body.className = "card-body";
+
+          const date = document.createElement("span");
+          date.className = "date-pill";
+          date.textContent = m.date;
+
+          const title = document.createElement("h3");
+          title.className = "card-title";
+          title.textContent = m.title;
+
+          const text = document.createElement("p");
+          text.className = "card-text";
+          text.textContent = m.text;
+
+          // const like = document.createElement("button");
+          // like.type = "button";
+          // like.className = "like";
+          // like.innerHTML = '<span class="h">🤍</span><span>أحببتها</span>';
+          // like.addEventListener("click", () => {
+          //   const on = like.classList.toggle("liked");
+          //   like.querySelector(".h").textContent = on ? "❤️" : "🤍";
+          //   if (on) {
+          //     const r = like.getBoundingClientRect();
+          //     burst(r.left + r.width / 2, r.top + r.height / 2, 10);
+          //   }
+          // });
+
+          body.append(date, title, text);
+          card.append(photo, body);
+          row.append(dot, card);
+          timeline.appendChild(row);
+        });
+
+        /* ---------- reveal on scroll ---------- */
+        const moments = document.querySelectorAll(".moment");
+        if ("IntersectionObserver" in window && !reduced) {
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((en) => {
+                if (en.isIntersecting) {
+                  en.target.classList.add("in");
+                  io.unobserve(en.target);
+                }
+              });
+            },
+            { threshold: 0.18 },
+          );
+          moments.forEach((m) => io.observe(m));
+        } else {
+          moments.forEach((m) => m.classList.add("in"));
+        }
+
+        /* ---------- heart traveling down the line ---------- */
+        const track = $("track"),
+          fill = $("trackFill"),
+          heart = $("trackHeart");
+        let ticking = false;
+        function updateProgress() {
+          ticking = false;
+          const rect = timeline.getBoundingClientRect();
+          const vh = window.innerHeight;
+          const total = rect.height;
+          const p = Math.min(1, Math.max(0, (vh * 0.55 - rect.top) / total));
+          const h = track.clientHeight * p;
+          fill.style.height = h + "px";
+          heart.style.top = h + "px";
+        }
+        function onScroll() {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(updateProgress);
+          }
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+        updateProgress();
+
+        /* ---------- live "together since" counter ---------- */
+        const start = new Date(CONFIG.startDate).getTime();
+        function tick() {
+          let diff = Date.now() - start;
+          if (isNaN(diff) || diff < 0) diff = 0;
+          const s = Math.floor(diff / 1000);
+          $("cDays").textContent = nf.format(Math.floor(s / 86400));
+          $("cHours").textContent = nf.format(Math.floor(s / 3600) % 24);
+          $("cMins").textContent = nf.format(Math.floor(s / 60) % 60);
+          $("cSecs").textContent = nf.format(s % 60);
+        }
+        tick();
+        setInterval(tick, 1000);
+
+        /* ---------- burst of hearts ---------- */
+        function burst(x, y, count) {
+          if (reduced) return;
+          const glyphs = ["❤", "💕", "💗", "💖", "🌸"];
+          for (let i = 0; i < count; i++) {
+            const h = document.createElement("span");
+            h.className = "burst";
+            h.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+            const a = Math.random() * Math.PI * 2;
+            const d = 70 + Math.random() * 150;
+            h.style.setProperty("--bx", Math.cos(a) * d + "px");
+            h.style.setProperty("--by", Math.sin(a) * d - 40 + "px");
+            h.style.left = x + "px";
+            h.style.top = y + "px";
+            h.style.animationDuration = 0.8 + Math.random() * 0.5 + "s";
+            document.body.appendChild(h);
+            h.addEventListener("animationend", () => h.remove());
+          }
+        }
+        $("ctaBtn").addEventListener("click", (e) => {
+          const r = e.currentTarget.getBoundingClientRect();
+          burst(r.left + r.width / 2, r.top + r.height / 2, 26);
+        });
+
+        /* ---------- ambient floating hearts ---------- */
+        if (!reduced) {
+          const bg = $("heartsBg");
+          const glyphs = ["❤", "💕", "💗"];
+          setInterval(() => {
+            if (document.hidden) return;
+            const h = document.createElement("span");
+            h.className = "floaty";
+            h.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+            h.style.left = Math.random() * 100 + "vw";
+            h.style.fontSize = 14 + Math.random() * 14 + "px";
+            h.style.setProperty("--drift", Math.random() * 80 - 40 + "px");
+            h.style.animationDuration = 8 + Math.random() * 6 + "s";
+            bg.appendChild(h);
+            h.addEventListener("animationend", () => h.remove());
+          }, 1100);
+        }
+      })();
+    </script>
+  </body>
+</html>
